@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="iewport" content="idth=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>text</title>
+    <script src="./lib/vue-2.5.16.js"></script>
+    <script src="./lib/vue-router-v3.0.1.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+    <style>
+      .router-link-active{
+          color: pink;
+      }
+    
+    </style>
+</head>
+
+<body>
+    <!-- router-link就是第一个创建的路由的hash连接的 -->
+    <div id="app">
+        <nav>
+         <ul class="pagination">
+     <router-link to="/home" tag="li"><span>首页</span></router-link>
+    <router-link to="/movie/top250/1" tag="li"><span>电影</span></router-link>
+    <router-link to="/about" tag="li"><span>汽车</span></router-link>
+      </ul>
+      <nav>
+        <!-- 路由的容器 -->
+        <router-view></router-view>
+       
+    </div>
+    <script>
+    
+
+        const home={
+            template:`<h2>首页</h2>`
+        };
+        const movie={
+            
+            template:`<h2>电影组建{{type}}-----{{id}}</h2>`,
+            props:['type','id']
+        };
+        const about={
+            template:`<h2>汽车组件</h2>`
+        };
+        const router = new VueRouter({ // 配置对象中，要提供 hash 地址 到 组件之间的 对应关系
+      routes: [ // 这个 routes 就是 路由 规则 的数组，里面要放很多的对应关系
+        // { path: 'hash地址', component: 配置对象 }
+        { path: '/home', component: home },
+        { path: '/movie/:type/:id', component: movie ,props:true},
+        { path: '/about', component: about }
+      ],
+         linkActiveClass:'active'
+    })
+
+
+
+
+
+
+        const vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router :router//把创建的路由对象一定挂在实例对象中
+        })
+    </script>
+</body>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="iewport" content="idth=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>text</title>
+    <script src="./lib/vue-2.5.16.js"></script>
+    <style>
+       th,td{
+           width: 100px;
+           height: 30px;
+           border:1px solid pink;
+           text-align: center;
+       }    
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <table>
+                <thead>
+                        <tr>
+                                <th>编号</th>
+                                <th>名称</th>
+                                <th>数量</th>
+                                <th>单价</th>
+                                <th>小计</th>
+                              </tr>
+                </thead>
+                <tbody>
+                        <tr v-for="item in list" :key="item.id">
+                          <td>{{item.id}}</td>
+                          <td>{{item.name}}</td>
+                          <td>
+                            <button @click="item.count-=1">-1</button>
+                            {{item.count}}
+                            <button @click="item.count+=1">+1</button>
+                          </td>
+                          <td>
+                            <button @click="item.price-=2">-2</button>
+                            {{item.price}}
+                            <button @click="item.price+=5">+5</button>
+                          </td>
+                          <td>{{item.count * item.price}}</td>
+                        </tr>
+                      </tbody>
+        </table>
+           <tfoot>
+               <tr>
+                   <td>
+                       <p>总数量{{totalCount}}</p>
+                       <p>总价格{{amount}}</p>
+                   </td>
+               </tr>
+           </tfoot>
+           
+
+
+         
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                list:[
+                    {id:1,name:'苹果',count:1,price:1},
+                    {id:1,name:'石榴',count:1,price:1},
+                    {id:1,name:'荔枝',count:1,price:1},
+
+                ]
+            },
+            methods: {},
+            computed:{
+                totalCount:function () {
+                    let c=0;
+                    this.list.forEach(item=>c+=item.count)
+                    return c
+                },
+                amount(){
+                    let a=0
+                    this.list.forEach(item=> a+=item.count*item.price)
+                      return a
+                }
+            }
+        })
+    </script>
+</body>

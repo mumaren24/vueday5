@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="iewport" content="idth=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>text</title>
+    <script src="./lib/vue-2.5.16.js"></script>
+</head>
+
+<body>
+    <div id="app">
+                <p>名称<input type="text" v-model="username"><p>
+                <p>密码<input type="password" v-model="password"><p>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                username:'',
+                password:''
+            },
+            methods: {},
+            filters:{},
+            components:{},
+            props:[],
+            watch: {
+        // '要监视的数据名称' : function(newVal, oldVal) { /* 监视到变化以后的处理函数 */ }
+        'username': function (newVal, oldVal) {
+          
+          if (newVal.length > 6) this.username = oldVal
+        },
+        password(newVal, oldVal) {
+          if (newVal.length > 15) this.password = oldVal
+        }
+      }
+        })
+    </script>
+</body>

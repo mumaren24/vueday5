@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./lib/vue-2.5.16.js"></script>
+  <script src="./lib/vue-router-v3.0.1.js"></script>
+</head>
+
+<body>
+  <div id="app">
+
+    <router-link to="/home">首页</router-link>
+    <router-link to="/movie">电影</router-link>
+    <router-link to="/about">关于</router-link>
+
+    <router-view></router-view>
+  </div>
+
+  <script>
+
+    const home = {
+      template: `<div>首页</div>`
+    }
+
+    const movie = {
+      template: `<div>电影
+        <router-link to="/movie/hot">正在热映</router-link>
+        <router-link to="/movie/new">即将上映</router-link>
+
+        <router-view></router-view>
+      </div>`
+    }
+
+    const about = {
+      template: `<div>关于</div>`
+    }
+
+    const hotMovie = {
+      template: `<div>正在热映</div>`
+    }
+    const newMovie = {
+      template: `<div>即将上映</div>`
+    }
+
+    const router = new VueRouter({
+      routes: [
+        { path: '/home', component: home },
+        {
+          path: '/movie', component: movie, children: [
+            { path: '/movie/hot', component: hotMovie },
+            { path: '/movie/new', component: newMovie }
+          ]
+        },
+        { path: '/about', component: about }
+      ]
+    })
+
+    // 创建 Vue 实例，得到 ViewModel
+    var vm = new Vue({
+      el: '#app',
+      data: {},
+      methods: {},
+      router
+    });
+  </script>
+</body>
+
+</html>

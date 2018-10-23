@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="iewport" content="idth=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>text</title>
+    <script src="./lib/vue-2.5.16.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="txt1">
+        <input type="text" v-model="txt2">
+        <!-- <input type="text" v-model="res"> -->
+          {{myres}}
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                txt1:'',
+                txt2:'',
+                res:''
+            },
+            methods: {},
+            computed:{
+                //计算属性名称 function(){}
+                myres:function(){
+                    const r= this.txt1 + this.txt2
+                    return r
+                }
+            }
+        })
+    </script>
+</body>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="iewport" content="idth=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>text</title>
+    <script src="./lib/vue-2.5.16.js"></script>
+    <script src="./lib/vue-router-v3.0.1.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+    <style>
+      .router-link-active{
+          color: pink;
+      }
+    
+    </style>
+</head>
+
+<body>
+    <!-- router-link就是第一个创建的路由的hash连接的 -->
+    <div id="app">
+        <nav>
+         <ul class="pagination">
+     <router-link to="/home" tag="li"><span>首页</span></router-link>
+    <router-link to="/movie" tag="li"><span>电影</span></router-link>
+    <router-link to="/about" tag="li"><span>汽车</span></router-link>
+      </ul>
+      <nav>
+        <!-- 路由的容器 -->
+        <router-view></router-view>
+       
+    </div>
+    <script>
+    
+
+        const home={
+            template:`<h2>首页</h2>`
+        };
+        const movie={
+            template:
+            `<div>
+            <h2>电影组建</h2>
+             <hr/>
+                    <nav>
+                            <ul class="pagination">
+                    <router-link to="/movie/tab1" tag="li"><span>正在演的</span></router-link>
+                    <router-link to="/movie/tab2" tag="li"><span>即将上映</span></router-link>
+                           </ul>
+                    </nav>
+                    <router-view></router-view>
+            </div>`
+        };
+        const tab1={
+            template:`<h5>正在上映的电影我很喜欢啊</h5>`
+        };
+        const tab2={
+            template:`<h5>即将上映的电影我不是很喜欢啊</h5>`
+        };
+        const about={
+            template:`<div>
+            
+            <h2>汽车组件</h2>
+            <hr/>
+                     <router-link to="/about/ab1">汽车的的</router-link>
+                    <router-link to="/about/ab2">即将上映的西汽车</router-link>
+                    <router-view></router-view>
+            </div>`
+        };
+        const ab1={
+            template:`<h5>张艺谋的影</h5>`
+        }
+        const ab2={
+            template:`<h5>黄渤的一出好戏</h5>`
+        }
+        const router = new VueRouter({ // 配置对象中，要提供 hash 地址 到 组件之间的 对应关系
+      routes: [ // 这个 routes 就是 路由 规则 的数组，里面要放很多的对应关系
+        // { path: 'hash地址', component: 配置对象 }
+        {path:'/',redirect:'/home'},
+        { path: '/home', component: home },
+        { path: '/movie', component: movie ,children:[
+
+            {path: '/movie/tab1', component: tab1},
+            {path: '/movie/tab2', component: tab2}
+
+        ]},
+        { path: '/about', component: about,children:[
+            {path: '/about/ab1', component: ab1},
+            {path: '/about/ab2', component: ab2}
+        ]}
+      ],
+         linkActiveClass:'active'
+    })
+
+
+
+
+
+
+        const vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router :router//把创建的路由对象一定挂在实例对象中
+        })
+    </script>
+</body>

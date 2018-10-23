@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./lib/vue-2.5.16.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <input type="text" v-model="txt1">
+    <input type="text" v-model="txt2">
+    <input type="text" v-model="myres"> {{myres}}
+  </div>
+
+  <script>
+    // 创建 Vue 实例，得到 ViewModel
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        txt1: '',
+        txt2: ''
+      },
+      methods: {},
+      computed: {
+        // 语法   计算属性的名称: function(){ /* 处理过程 ；  return 处理的结果 */ }
+        // 计算属性，在被使用的时候，是当作普通属性来用的，而不是当作一个方法
+        myres: function () {
+          // 在计算属性中，只要任何一个被依赖的数据发生了变化，都会触发 计算属性的重新求值；
+          // 只要计算属性的值被重新计算了，那么 ，对应的页面就会更新
+          const r = this.txt1 + this.txt2
+          return r
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

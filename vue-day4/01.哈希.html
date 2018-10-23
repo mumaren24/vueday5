@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="iewport" content="idth=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>text</title>
+    <script src="./lib/vue-2.5.16.js"></script>
+</head>
+
+<body>
+    <div id="app">
+            <a href="#home">首页</a>
+            <a href="#movie">电影</a>
+            <a href="#about">关于</a>
+            <hr>
+            <!-- 接下来，应该 通过 某种方式，监听到 hash 地址的变化，然后根据不同的 hash 地址，把  :is 属性替换为 不同的组件名称 -->
+            <component :is="comName"></component>
+    </div>
+    
+    <script>
+        Vue.component('my-home', {
+      template: `<h3>首页</h3>`
+    })
+
+    Vue.component('my-movie', {
+      template: `<h3>电影</h3>`
+    })
+
+    Vue.component('my-about', {
+      template: `<h3>关于</h3>`
+    })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                comName:'my-home'
+            },
+            created(){
+               this.init()
+            },
+            methods: {
+              init(){
+                window.onhashchange = () => {
+            // 每当 hash 地址变化，就立即获取到最新的hash值
+            // 根据最新的hash值，修改 this.comName 所对应的组件名称
+            // console.log(location.hash)
+            switch (location.hash) {
+              case '#home':
+                // 如果当前URL地址栏中的hash值为 #home, 那么 就把 component 中的 is 属性的值，替换为 my-home
+                this.comName = 'my-home'
+                break;
+              case '#movie':
+                this.comName = 'my-movie'
+                break;
+              case '#about':
+                this.comName = 'my-about'
+                break;
+            }
+          }
+              }
+            }
+        })
+    </script>
+</body>

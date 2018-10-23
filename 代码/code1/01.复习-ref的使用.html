@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./lib/vue-2.5.16.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <my-com1 ref="form1"></my-com1>
+    <hr/>
+    <button @click="clear">清空表单</button>
+    <!-- 思路1： 在 父组件中， 想办法获取到 子组件中的 form 对象，然后 当触发 父组件中 按钮的点击事件时候，调用 子组件中 form 对象的 reset() 方法 -->
+    <!-- 思路2（推荐的实现思路）： 在 子组件中，定义 一个 resetFields 方法， 这个方法中，可以进行表单的reset() 工作，然后，我们只需要把 这个 resetFields 暴露给外界去调用就可以 -->
+  </div>
+
+  <script>
+    Vue.component('my-com1', {
+      template: `<div>
+        <h3>这是一个组件</h3>
+        <form ref="myform">
+          <p>名字：<input /></p>
+          <p>密码：<input /></p>
+        </form>
+      </div>`,
+      data() {
+        return {
+          msg: '组件的私有数据'
+        }
+      },
+      methods: {
+        test() {
+          console.log('有人调用了组件的 test 方法')
+        },
+        // 封装一个 重置表单 的方法，外界如果想要重置 当前组件中的表单，就可以 直接调用这个方法即可
+        resetFields() {
+          this.$refs.myform.reset()
+        }
+      }
+    })
+
+    // 创建 Vue 实例，得到 ViewModel
+    var vm = new Vue({
+      el: '#app',
+      data: {},
+      methods: {
+        clear() {
+          // 这是 $refs 最经典的应用场景
+          this.$refs.form1.resetFields()
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
